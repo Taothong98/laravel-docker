@@ -1,0 +1,44 @@
+version: '3.1'
+services:    
+  laravel:
+    image: taothong98/laravel-docker:1.0
+    container_name: lara_web     
+    ports:
+      - 8000:80
+      - 8080:443
+    volumes:
+      # - ./start.sh:/start.sh  
+      # - ./test_laravel2:/test_laravel2
+      # - ./test_laravel:/test_laravel
+
+      - ./database.php:/test_laravel/config//database.php
+      - ./.env:/test_laravel/.env
+      - ./web.php:/test_laravel/routes/web.php
+
+    command: ["/bin/bash","-c","/start.sh"]
+    networks:
+      - database-net    
+
+  mysql-db:
+    image: mysql:8.4.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - database-net
+      
+  phpmyadmin:
+    image: phpmyadmin
+    networks:
+      - database-net
+    restart: always
+    ports:
+      - 8443:80
+    environment:
+      - PMA_ARBITRARY=1
+
+networks:
+  database-net:
+    driver: bridge
+
+
