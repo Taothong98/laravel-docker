@@ -7,10 +7,10 @@ services:
       - 8000:80
       - 8080:443
     volumes:
-      # - ./start.sh:/start.sh  
-      # - ./test_laravel2:/test_laravel2
+
       # - ./test_laravel:/test_laravel
 
+      - ./start.sh:/start.sh  
       - ./database.php:/test_laravel/config//database.php
       - ./.env:/test_laravel/.env
       - ./web.php:/test_laravel/routes/web.php
